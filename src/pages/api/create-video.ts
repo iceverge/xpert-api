@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import prisma from "@lib/prisma";
-import validApiKeys from "@lib/header";
+import { verifyApiKey } from "@lib/header";
 
 type Body = {
   talentId: string;
@@ -21,11 +21,8 @@ export default async function handler(
   }
 
   // Verify if the provided apiKey matches any of the bcrypt hashed keys
-  const validKey = await Promise.any(
-    validApiKeys.map((key) => bcrypt.compare(apiKey, key))
-  );
-
-  if (!validKey) {
+  const isKeyValid = verifyApiKey(apiKey);
+  if (!isKeyValid) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
