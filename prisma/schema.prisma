@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id         String    @id @unique @default(uuid())
+  firstName  String
+  middleName String?
+  lastName   String
+  birthdate  String
+  gender     String
+  email      String    @unique
+  createdAt  DateTime?
+  updatedAt  DateTime?
+  deletedAt  DateTime?
+  account    Account?
+  talent     Talent?
+  review     Review[]
+}
+
+model Account {
+  id        String    @id @unique @default(uuid())
+  userId    String    @unique
+  password  String
+  createdAt DateTime?
+  updatedAt DateTime?
+  deletedAt DateTime?
+  user      User?     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Talent {
+  id         String    @id @unique @default(uuid())
+  userId     String    @unique
+  profileURL String?
+  createdAt  DateTime?
+  updatedAt  DateTime?
+  deletedAt  DateTime?
+  user       User?     @relation(fields: [userId], references: [id])
+  videos     Video[]
+  Review     Review[]
+
+  @@index([userId])
+}
+
+model Video {
+  id        String    @id @unique @default(uuid())
+  url       String?
+  talentId  String
+  createdAt DateTime?
+  updatedAt DateTime?
+  deletedAt DateTime?
+  talent    Talent    @relation(fields: [talentId], references: [id])
+
+  @@index([talentId])
+}
+
+model Review {
+  id       String  @id @unique @default(uuid())
+  userId   String
+  talentId String
+  user     User?   @relation(fields: [userId], references: [id])
+  talent   Talent? @relation(fields: [talentId], references: [id])
+
+  @@index([userId])
+  @@index([talentId])
+}
