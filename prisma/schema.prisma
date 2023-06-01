@@ -40,6 +40,7 @@ model Talent {
   id         String    @id @unique @default(uuid())
   userId     String    @unique
   profileURL String?   @db.Text
+  talentType String?
   createdAt  DateTime?
   updatedAt  DateTime?
   deletedAt  DateTime?
