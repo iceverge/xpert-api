@@ -32,6 +32,9 @@ export default async function handler(
         firstName: true,
         middleName: true,
         lastName: true,
+        birthdate: true,
+        email: true,
+        gender: true,
         talent: {
           select: {
             id: true,
