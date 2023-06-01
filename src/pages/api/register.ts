@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import prisma from "@lib/prisma";
 import { verifyApiKey } from "@lib/header";
+import { table } from "console";
 
 type Body = {
   firstName: string;
@@ -9,6 +10,7 @@ type Body = {
   lastName: string;
   birthdate: string;
   gender: string;
+  talent: string;
   email: string;
   password: string;
 };
@@ -41,6 +43,7 @@ export default async function handler(
     lastName,
     birthdate,
     gender,
+    talent,
     email,
     password,
   }: Body = req.body;
@@ -75,6 +78,7 @@ export default async function handler(
         talent: {
           create: {
             profileURL: profileURL,
+            talentType: talent,
             createdAt: new Date(),
           },
         },

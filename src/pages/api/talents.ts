@@ -39,6 +39,7 @@ export default async function handler(
           select: {
             id: true,
             profileURL: true,
+            talentType: true,
           },
         },
       },
