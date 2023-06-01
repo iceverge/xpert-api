@@ -46,8 +46,13 @@ export default async function handler(
   }: Body = req.body;
 
   try {
+    const profileURL: string =
+      gender === "male"
+        ? "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+        : "https://static.vecteezy.com/system/resources/previews/006/898/692/non_2x/avatar-face-icon-female-social-profile-of-business-woman-woman-portrait-support-service-call-center-illustration-free-vector.jpg";
+
     const userProfile = await prisma.user.update({
-      where: { email },
+      where: { id },
       data: {
         firstName,
         middleName,
@@ -56,6 +61,12 @@ export default async function handler(
         gender,
         email,
         updatedAt: new Date(),
+        talent: {
+          update: {
+            profileURL: profileURL,
+            updatedAt: new Date(),
+          },
+        },
       },
     });
 
