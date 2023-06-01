@@ -52,7 +52,7 @@ export default async function handler(
         : "https://static.vecteezy.com/system/resources/previews/006/898/692/non_2x/avatar-face-icon-female-social-profile-of-business-woman-woman-portrait-support-service-call-center-illustration-free-vector.jpg";
 
     const userProfile = await prisma.user.update({
-      where: { email },
+      where: { id },
       data: {
         firstName,
         middleName,

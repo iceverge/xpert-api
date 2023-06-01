@@ -39,7 +39,7 @@ model Account {
 model Talent {
   id         String    @id @unique @default(uuid())
   userId     String    @unique
-  profileURL String?
+  profileURL String?   @db.Text
   createdAt  DateTime?
   updatedAt  DateTime?
   deletedAt  DateTime?
