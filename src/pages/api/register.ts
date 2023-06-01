@@ -31,6 +31,8 @@ export default async function handler(
     return res.status(401).json({ message: "Unauthorized" });
   }
 
+  return res.status(201).json({ message: "Something" });
+
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
