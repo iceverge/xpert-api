@@ -8,28 +8,10 @@ type Body = {
   password: string;
 };
 
-type Account = {
-  password: string | null;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Check if the API key is provided in the request headers
-  const apiKey: string | undefined = req.headers["x-api-key"]?.toString();
-
-  // Verify if the API key is valid
-  if (!apiKey) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  // Verify if the provided apiKey matches any of the bcrypt hashed keys
-  const isKeyValid = verifyApiKey(apiKey);
-  if (!isKeyValid) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
   if (req.method !== "POST") {
     return res
       .status(405)
@@ -47,7 +29,30 @@ export default async function handler(
     }
 
     // Retrieve the user by email
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        birthdate: true,
+        email: true,
+        gender: true,
+        talent: {
+          select: {
+            id: true,
+            profileURL: true,
+            talentType: true,
+            videos: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
+      },
+    });
 
     // Check if the user exists
     if (!user) {
@@ -57,8 +62,12 @@ export default async function handler(
     }
 
     // Retrieve the user account by userId
-    const account: Account | null = await prisma.account.findUnique({
+    const account = await prisma.account.findUnique({
       where: { userId: user.id },
+      select: {
+        userId: true,
+        password: true,
+      },
     });
 
     // Compare the provided password with the hashed password
