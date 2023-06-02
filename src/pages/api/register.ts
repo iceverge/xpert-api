@@ -55,7 +55,7 @@ export default async function handler(
       talent,
       email,
       password,
-    }: Body = req.body;
+    } = req.body;
 
     if (!password) {
       return res.status(400).json({ message: "Password is required" });
