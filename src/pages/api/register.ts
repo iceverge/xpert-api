@@ -56,7 +56,7 @@ export default async function handler(
   //   .json({ message: "User registered successfully", email });
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
     const profileURL: string =
       gender.toLowerCase() === "male"
@@ -74,7 +74,7 @@ export default async function handler(
         createdAt: new Date(),
         account: {
           create: {
-            password: hashedPassword,
+            password: password,
             createdAt: new Date(),
           },
         },
