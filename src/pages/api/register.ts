@@ -55,7 +55,7 @@ export default async function handler(
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const profileURL: string =
-      gender === "male"
+      gender.toLowerCase() === "male"
         ? "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
         : "https://static.vecteezy.com/system/resources/previews/006/898/692/non_2x/avatar-face-icon-female-social-profile-of-business-woman-woman-portrait-support-service-call-center-illustration-free-vector.jpg";
 
