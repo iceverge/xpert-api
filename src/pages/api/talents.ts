@@ -40,6 +40,11 @@ export default async function handler(
             id: true,
             profileURL: true,
             talentType: true,
+            videos: {
+              select: {
+                url: true,
+              },
+            },
           },
         },
       },
