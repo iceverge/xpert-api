@@ -9,7 +9,7 @@ export default async function handler(
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { talentId } = req.body;
+  const { talentId }: any = req.query["talentId"]?.toString();
 
   try {
     const videos = await prisma.video.findMany({
