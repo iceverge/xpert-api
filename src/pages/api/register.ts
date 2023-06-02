@@ -47,13 +47,13 @@ export default async function handler(
     password,
   }: Body = req.body;
 
+  if (!password) {
+    return res.status(400).json({ message: "Password is required" });
+  }
+
   return res
     .status(201)
-    .json({ message: "User registered successfully", firstName });
-
-  // if (!password) {
-  //   return res.status(400).json({ message: "Password is required" });
-  // }
+    .json({ message: "User registered successfully", email });
 
   // try {
   //   const hashedPassword = await bcrypt.hash(password, 10);
