@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import prisma from "@lib/prisma";
 import { verifyApiKey } from "@lib/header";
-import { table } from "console";
 
 type Body = {
   firstName: string;
@@ -19,19 +18,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Check if the API key is provided in the request headers
-  const apiKey: string | undefined = req.headers["x-api-key"]?.toString();
+  // // Check if the API key is provided in the request headers
+  // const apiKey: string | undefined = req.headers["x-api-key"]?.toString();
 
-  // Verify if the API key is valid
-  if (!apiKey) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // // Verify if the API key is valid
+  // if (!apiKey) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
 
-  // Verify if the provided apiKey matches any of the bcrypt hashed keys
-  const isKeyValid = verifyApiKey(apiKey);
-  if (!isKeyValid) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // // Verify if the provided apiKey matches any of the bcrypt hashed keys
+  // const isKeyValid = verifyApiKey(apiKey);
+  // if (!isKeyValid) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
 
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
